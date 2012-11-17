@@ -67,16 +67,13 @@ const CGFloat INButtonTopOffset = 3.0;
     CGColorSpaceRef theColorSpace = CGColorSpaceCreateWithName(kCGColorSpaceGenericRGB);
     CGColorRef theColor = CGColorCreate(theColorSpace, components);
     CGColorSpaceRelease(theColorSpace);
-
-     #if !__has_feature(objc_arc)
-    return (CGColorRef)[(id)theColor autorelease];
-    #else
+	
     return theColor;
-    #endif
 }
 @end
 
-NS_INLINE CGFloat INMidHeight(NSRect aRect){
+NS_INLINE CGFloat INMidHeight(NSRect aRect)
+{
     return (aRect.size.height * (CGFloat)0.5);
 }
 
@@ -96,11 +93,7 @@ static inline CGPathRef createClippingPathWithRectAndRadius(NSRect rect, CGFloat
 static inline CGGradientRef createGradientWithColors(NSColor *startingColor, NSColor *endingColor)
 {
     CGFloat locations[2] = {0.0f, 1.0f, };
-    #if __has_feature(objc_arc)
     CFArrayRef colors = (__bridge CFArrayRef)[NSArray arrayWithObjects:(__bridge id)[startingColor IN_CGColorCreate], (__bridge id)[endingColor IN_CGColorCreate], nil];
-    #else
-    CFArrayRef colors = (CFArrayRef)[NSArray arrayWithObjects:(id)[startingColor IN_CGColorCreate], (id)[endingColor IN_CGColorCreate], nil];
-    #endif
     CGColorSpaceRef colorSpace = CGColorSpaceCreateDeviceRGB();
     CGGradientRef gradient = CGGradientCreateWithColors(colorSpace, colors, locations);
     CGColorSpaceRelease(colorSpace);
@@ -318,7 +311,7 @@ static inline CGGradientRef createGradientWithColors(NSColor *startingColor, NSC
 }
 @end
 
-@implementation INAppStoreWindow{
+@implementation INAppStoreWindow {
     CGFloat _cachedTitleBarHeight;  
     BOOL _setFullScreenButtonRightMargin;
     INAppStoreWindowDelegateProxy *_delegateProxy;
@@ -368,11 +361,6 @@ static inline CGGradientRef createGradientWithColors(NSColor *startingColor, NSC
 {
     [[NSNotificationCenter defaultCenter] removeObserver:self];
 //    [self setDelegate:nil];
-    #if !__has_feature(objc_arc)
-//    [_delegateProxy release];
-    [_titleBarView release];
-    [super dealloc];    
-    #endif
 }
 
 #pragma mark -
@@ -431,12 +419,7 @@ static inline CGGradientRef createGradientWithColors(NSColor *startingColor, NSC
 {
     if ((_titleBarView != newTitleBarView) && newTitleBarView) {
         [_titleBarView removeFromSuperview];
-        #if __has_feature(objc_arc)
         _titleBarView = newTitleBarView;
-        #else
-        [_titleBarView release];
-        _titleBarView = [newTitleBarView retain];
-        #endif
         [_titleBarView setFrame:[_titleBarContainer bounds]];
         [_titleBarView setAutoresizingMask:NSViewWidthSizable | NSViewHeightSizable];
         [_titleBarContainer addSubview:_titleBarView];
@@ -684,13 +667,8 @@ static inline CGGradientRef createGradientWithColors(NSColor *startingColor, NSC
     NSView *firstSubview = [[themeFrame subviews] objectAtIndex:0];
     [self _recalculateFrameForTitleBarContainer];
     [themeFrame addSubview:container positioned:NSWindowBelow relativeTo:firstSubview];
-    #if __has_feature(objc_arc)
     _titleBarContainer = container;
     self.titleBarView = [[INTitlebarView alloc] initWithFrame:NSZeroRect];
-    #else
-    _titleBarContainer = [container autorelease];
-    self.titleBarView = [[[INTitlebarView alloc] initWithFrame:NSZeroRect] autorelease];
-    #endif
 }
 
 - (void)_hideTitleBarView:(BOOL)hidden 
