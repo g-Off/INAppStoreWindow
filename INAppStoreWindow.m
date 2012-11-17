@@ -16,6 +16,7 @@
 //
 
 #import "INAppStoreWindow.h"
+#import <objc/runtime.h>
 
 #define IN_RUNNING_LION (floor(NSAppKitVersionNumber) > NSAppKitVersionNumber10_6)
 #define IN_COMPILING_LION __MAC_OS_X_VERSION_MAX_ALLOWED >= 1070
@@ -117,10 +118,10 @@ static inline CGGradientRef createGradientWithColors(NSColor *startingColor, NSC
 {
     if ([self.secondaryDelegate respondsToSelector:aSelector]) {
         return YES;
-    } else if ([NSStringFromSelector(aSelector) isEqualToString:@"window:willPositionSheet:usingRect:"]) {
-        //TODO: not sure if there is a better way to do this check
+    } else if (sel_isEqual(aSelector, @selector(window:willPositionSheet:usingRect:))) {
+		//TODO: not sure if there is a better way to do this check
         return YES;
-    }
+	}
     return NO;
 }
 
