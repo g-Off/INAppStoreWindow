@@ -319,23 +319,6 @@ static inline CGGradientRef createGradientWithColors(NSColor *startingColor, NSC
     INTitlebarContainer *_titleBarContainer;
 }
 
-@synthesize titleBarView = _titleBarView;
-@synthesize titleBarHeight = _titleBarHeight;
-@synthesize centerFullScreenButton = _centerFullScreenButton;
-@synthesize centerTrafficLightButtons = _centerTrafficLightButtons;
-@synthesize verticalTrafficLightButtons = _verticalTrafficLightButtons;
-@synthesize hideTitleBarInFullScreen = _hideTitleBarInFullScreen;
-@synthesize titleBarDrawingBlock = _titleBarDrawingBlock;
-@synthesize showsBaselineSeparator = _showsBaselineSeparator;
-@synthesize fullScreenButtonRightMargin = _fullScreenButtonRightMargin;
-@synthesize trafficLightButtonsLeftMargin = _trafficLightButtonsLeftMargin;
-@synthesize titleBarStartColor = _titleBarStartColor;
-@synthesize titleBarEndColor = _titleBarEndColor;
-@synthesize baselineSeparatorColor = _baselineSeparatorColor;
-@synthesize inactiveTitleBarStartColor = _inactiveTitleBarStartColor;
-@synthesize inactiveTitleBarEndColor = _inactiveTitleBarEndColor;
-@synthesize inactiveBaselineSeparatorColor = _inactiveBaselineSeparatorColor;
-
 #pragma mark -
 #pragma mark Initialization
 
@@ -427,11 +410,6 @@ static inline CGGradientRef createGradientWithColors(NSColor *startingColor, NSC
     }
 }
 
-- (NSView *)titleBarView
-{
-    return _titleBarView;
-}
-
 - (void)setTitleBarHeight:(CGFloat)newTitleBarHeight 
 {
     if (_titleBarHeight != newTitleBarHeight) {
@@ -442,22 +420,12 @@ static inline CGGradientRef createGradientWithColors(NSColor *startingColor, NSC
     }
 }
 
-- (CGFloat)titleBarHeight
-{
-    return _titleBarHeight;
-}
-
 - (void)setShowsBaselineSeparator:(BOOL)showsBaselineSeparator
 {
     if (_showsBaselineSeparator != showsBaselineSeparator) {
         _showsBaselineSeparator = showsBaselineSeparator;
         [self.titleBarView setNeedsDisplay:YES];
     }
-}
-
-- (BOOL)showsBaselineSeparator
-{
-    return _showsBaselineSeparator;
 }
 
 - (void)setTrafficLightButtonsLeftMargin:(CGFloat)newTrafficLightButtonsLeftMargin
@@ -470,12 +438,6 @@ static inline CGGradientRef createGradientWithColors(NSColor *startingColor, NSC
     }
 }
 
-- (CGFloat)trafficLightButtonsLeftMargin
-{
-    return _trafficLightButtonsLeftMargin;
-}
-
-
 - (void)setFullScreenButtonRightMargin:(CGFloat)newFullScreenButtonRightMargin
 {
     if (_fullScreenButtonRightMargin != newFullScreenButtonRightMargin) {
@@ -484,11 +446,6 @@ static inline CGGradientRef createGradientWithColors(NSColor *startingColor, NSC
         [self _layoutTrafficLightsAndContent];
         [self _displayWindowAndTitlebar];
     }
-}
-
-- (CGFloat)fullScreenButtonRightMargin
-{
-    return _fullScreenButtonRightMargin;
 }
 
 - (void)setCenterFullScreenButton:(BOOL)centerFullScreenButton{
@@ -741,7 +698,6 @@ static inline CGGradientRef createGradientWithColors(NSColor *startingColor, NSC
     // Redraw the window and titlebar
     [_titleBarView setNeedsDisplay:YES];
 }
-
 
 - (void)_updateTitlebarView
 {

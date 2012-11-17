@@ -17,14 +17,6 @@
 
 #import <Cocoa/Cocoa.h>
 
-#if __has_feature(objc_arc)
-#define INAppStoreWindowCopy nonatomic, strong
-#define INAppStoreWindowRetain nonatomic, strong
-#else
-#define INAppStoreWindowCopy nonatomic, copy
-#define INAppStoreWindowRetain nonatomic, retain
-#endif
-
 /** @class INTitlebarView
  Draws a default style Mac OS X title bar.
  */
@@ -43,7 +35,7 @@
 /** The title bar view itself. Add subviews to this view that you want to show in the title bar 
  (e.g. buttons, a toolbar, etc.). This view can also be set if you want to use a different 
  styled title bar aside from the default one (textured, etc.). */
-@property (INAppStoreWindowRetain) NSView *titleBarView;
+@property (nonatomic, strong) NSView *titleBarView;
 
 /** Set whether the fullscreen or traffic light buttons are horizontally centered */
 @property (nonatomic) BOOL centerFullScreenButton;
@@ -61,13 +53,13 @@
 @property (nonatomic) CGFloat fullScreenButtonRightMargin;
 
 /** The colors of the title bar background gradient and baseline separator, in main and non-main variants. */
-@property (INAppStoreWindowRetain) NSColor *titleBarStartColor;
-@property (INAppStoreWindowRetain) NSColor *titleBarEndColor;
-@property (INAppStoreWindowRetain) NSColor *baselineSeparatorColor;
+@property (nonatomic, strong) NSColor *titleBarStartColor;
+@property (nonatomic, strong) NSColor *titleBarEndColor;
+@property (nonatomic, strong) NSColor *baselineSeparatorColor;
 
-@property (INAppStoreWindowRetain) NSColor *inactiveTitleBarStartColor;
-@property (INAppStoreWindowRetain) NSColor *inactiveTitleBarEndColor;
-@property (INAppStoreWindowRetain) NSColor *inactiveBaselineSeparatorColor;
+@property (nonatomic, strong) NSColor *inactiveTitleBarStartColor;
+@property (nonatomic, strong) NSColor *inactiveTitleBarEndColor;
+@property (nonatomic, strong) NSColor *inactiveBaselineSeparatorColor;
 
 
 /** So much logic and work has gone into this window subclass to achieve a custom title bar,
@@ -76,7 +68,7 @@
  */
 typedef void (^INAppStoreWindowTitleBarDrawingBlock)(BOOL drawsAsMainWindow, 
                                                      CGRect drawingRect, CGPathRef clippingPath);
-@property (INAppStoreWindowCopy) INAppStoreWindowTitleBarDrawingBlock titleBarDrawingBlock;
+@property (nonatomic, copy) INAppStoreWindowTitleBarDrawingBlock titleBarDrawingBlock;
 
 - (void)setTitleBarDrawingBlock:(INAppStoreWindowTitleBarDrawingBlock)titleBarDrawingBlock;
 
