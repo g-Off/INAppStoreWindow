@@ -56,11 +56,13 @@
 @property (nonatomic, strong) NSColor *titleBarStartColor;
 @property (nonatomic, strong) NSColor *titleBarEndColor;
 @property (nonatomic, strong) NSColor *baselineSeparatorColor;
+@property (nonatomic, strong) NSColor *upperLineColor;
 
 @property (nonatomic, strong) NSColor *inactiveTitleBarStartColor;
 @property (nonatomic, strong) NSColor *inactiveTitleBarEndColor;
 @property (nonatomic, strong) NSColor *inactiveBaselineSeparatorColor;
 
+@property (nonatomic) BOOL drawsNoise;
 
 /** So much logic and work has gone into this window subclass to achieve a custom title bar,
  it would be a shame to have to re-invent that just to change the look. So this block can be used

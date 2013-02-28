@@ -213,12 +213,23 @@ static inline CGGradientRef createGradientWithColors(NSColor *startingColor, NSC
         }
         
         NSRect clippingRect = drawingRect;
+		
         #if IN_COMPILING_LION
         if((([window styleMask] & NSFullScreenWindowMask) == NSFullScreenWindowMask)){
             [[NSColor blackColor] setFill];
             [[NSBezierPath bezierPathWithRect:self.bounds] fill];
         }
         #endif
+		
+		if (window.upperLineColor) {
+			CGPathRef clippingPath = createClippingPathWithRectAndRadius(clippingRect, INCornerClipRadius);
+			CGContextAddPath(context, clippingPath);
+			CGContextClip(context);
+			[window.upperLineColor setFill];
+			NSRectFill(clippingRect);
+			CGPathRelease(clippingPath);
+		}
+		
         clippingRect.size.height -= 1;        
         CGPathRef clippingPath = createClippingPathWithRectAndRadius(clippingRect, INCornerClipRadius);
         CGContextAddPath(context, clippingPath);
@@ -264,8 +275,10 @@ static inline CGGradientRef createGradientWithColors(NSColor *startingColor, NSC
             CGContextClip(context);
             CGPathRelease(noiseClippingPath);
             
-            [self drawNoiseWithOpacity:0.1];
-        }        
+			if (window.drawsNoise) {
+				[self drawNoiseWithOpacity:0.1];
+			}
+        }
     }
 }
 
@@ -474,7 +487,7 @@ static inline CGGradientRef createGradientWithColors(NSColor *startingColor, NSC
 - (void)setDelegate:(id<NSWindowDelegate>)anObject
 {
     [_delegateProxy setSecondaryDelegate:anObject];
-    [super setDelegate:_delegateProxy];    
+    [super setDelegate:_delegateProxy];
 }
 
 - (id<NSWindowDelegate>)delegate
